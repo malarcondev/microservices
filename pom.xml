@@ -7,9 +7,13 @@
   <groupId>org.malarcondev</groupId>
   <artifactId>microservices</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>microservices</name>
   <url>http://www.example.com</url>
+  <modules>
+    <module>customer</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
