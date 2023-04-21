@@ -1,5 +1,6 @@
 package org.malarcondev.customer.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.malarcondev.customer.dto.CustomerRegistrationRequest;
 import org.malarcondev.customer.service.CustomerService;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("api/v1/customer")
-public record CustomerController(CustomerService customerService) {
+@AllArgsConstructor
+public class CustomerController {
+
+    private final CustomerService customerService;
 
     @PostMapping("/register")
     public void registerCustomer(@RequestBody CustomerRegistrationRequest request) {
