@@ -2,7 +2,7 @@ package org.malarcondev.fraud.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.malarcondev.fraud.dto.FraudCheckResponse;
+import org.malarcondev.clients.fraud.FraudCheckResponse;
 import org.malarcondev.fraud.service.FraudCheckService;
 import org.springframework.web.bind.annotation.*;
 

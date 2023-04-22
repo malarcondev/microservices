@@ -1,4 +1,4 @@
-package org.malarcondev.fraud.dto;
+package org.malarcondev.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }
