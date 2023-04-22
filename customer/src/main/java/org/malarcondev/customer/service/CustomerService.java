@@ -3,19 +3,20 @@ package org.malarcondev.customer.service;
 import lombok.AllArgsConstructor;
 import org.malarcondev.clients.fraud.FraudCheckResponse;
 import org.malarcondev.clients.fraud.FraudClient;
+import org.malarcondev.clients.notification.NotificationClient;
+import org.malarcondev.clients.notification.NotificationRequest;
 import org.malarcondev.customer.dto.CustomerRegistrationRequest;
 import org.malarcondev.customer.entity.Customer;
 import org.malarcondev.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @AllArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -36,5 +37,12 @@ public class CustomerService {
         }
 
         // TODO: send notification
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi %s, Welcome...", customer.getFirstname())
+                )
+        );
     }
 }
