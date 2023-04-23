@@ -23,3 +23,10 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka/
     fetch-registry: true
     register-with-eureka: true
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
