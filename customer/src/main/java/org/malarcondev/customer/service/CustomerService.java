@@ -1,9 +1,9 @@
 package org.malarcondev.customer.service;
 
 import lombok.AllArgsConstructor;
+import org.malarcondev.amqp.RabbitMQMessageProducer;
 import org.malarcondev.clients.fraud.FraudCheckResponse;
 import org.malarcondev.clients.fraud.FraudClient;
-import org.malarcondev.clients.notification.NotificationClient;
 import org.malarcondev.clients.notification.NotificationRequest;
 import org.malarcondev.customer.dto.CustomerRegistrationRequest;
 import org.malarcondev.customer.entity.Customer;
@@ -16,7 +16,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final FraudClient fraudClient;
-    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -36,13 +36,15 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // TODO: send notification
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hi %s, Welcome...", customer.getFirstname())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome..",
+                        customer.getFirstname())
         );
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key");
     }
 }
