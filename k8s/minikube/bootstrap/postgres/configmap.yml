@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  POSTGRES_DB: malarcondev
+  POSTGRES_USER: malarcondev
+  POSTGRES_PASSWORD: password
